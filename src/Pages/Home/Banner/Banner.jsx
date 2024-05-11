@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <div className="min-h-[80vh]">
       <div className=" bg-[#0f80de] pt-24 md:pt-36 lg:pt-16 text-center lg:text-start">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:px-12 ">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:px-10 ">
           <div className="text-white flex flex-col justify-center space-y-8">
             <h1 className=" text-2xl md:text-5xl font-bold">
               Professional assignment help <br />
