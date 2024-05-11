@@ -9,6 +9,9 @@ const Nav = () => {
       <li>
         <NavLink className={"font-bold"} to="/assignments">Assignments</NavLink>
       </li>
+      <li>
+        <NavLink className={"font-bold"} to="/create-assignments">Create Assignments</NavLink>
+      </li>
     </>
   );
 

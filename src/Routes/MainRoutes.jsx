@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home/HomePage/Home";
 import Assignments from "../Pages/Assignments/Assignments";
+import CreateAssignments from "../Pages/Assignments/CreateAssignments";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         {
           path: "/assignments",
           element: <Assignments/>
+        },
+        {
+          path: "/create-assignments",
+          element: <CreateAssignments/>
         }
       ]
     },
