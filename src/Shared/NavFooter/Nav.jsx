@@ -4,16 +4,16 @@ const Nav = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink className={"font-bold"} to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/assignments">Assignments</NavLink>
+        <NavLink className={"font-bold"} to="/assignments">Assignments</NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="navbar bg-[#0f80de] text-white fixed">
+    <div className="navbar bg-[#0f80de] text-white fixed z-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
