@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import formBg from "../../assets/images/form_bg.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Login = () => {
+
+  const {loginUser} = useContext(AuthContext)
+  const navigate = useNavigate()
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -9,6 +15,23 @@ const Login = () => {
     const password = form.password.value;
 
     console.log({ email, password, });
+
+    loginUser(email, password)
+    .then(()=>{
+      Swal.fire({
+        icon: 'success',
+        title: "SUCCESS",
+        text: " You Logged in  Successfuly!"
+      })
+      navigate('/')
+    })
+    .catch(err => {
+      Swal.fire({
+        icon: "error",
+        text: `${err.message}`
+      })
+    })
+
   };
 
   return (

@@ -22,7 +22,7 @@ const Register = () => {
     const name = form.name.value;
     const photoUrl = form.photoUrl.value;
 
-    console.log({ name, photoUrl, email, password });
+    // console.log({ name, photoUrl, email, password });
 
     if (!validatePassword(password)) {
       Swal.fire({
