@@ -1,6 +1,8 @@
+
 import { Link, NavLink } from "react-router-dom";
 
 const Nav = () => {
+
   const navLinks = (
     <>
       <li>
@@ -12,6 +14,7 @@ const Nav = () => {
       <li>
         <NavLink className={"font-bold"} to="/create-assignments">Create Assignments</NavLink>
       </li>
+     
     </>
   );
 

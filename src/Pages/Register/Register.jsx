@@ -1,7 +1,19 @@
+import { useContext } from "react";
 import formBg from "../../assets/images/form_bg.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const { registerUser, updateUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  function validatePassword(password) {
+    const regex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
+    return regex.test(password);
+  }
+
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -10,7 +22,38 @@ const Register = () => {
     const name = form.name.value;
     const photoUrl = form.photoUrl.value;
 
-    console.log({name, photoUrl, email, password });
+    console.log({ name, photoUrl, email, password });
+
+    if (!validatePassword(password)) {
+      Swal.fire({
+        icon: "error",
+        text: "Password must have UPPERCASE, lowercase and longer than 6 characters",
+        color: "#FF0000",
+      });
+      return;
+    }
+
+    registerUser(email, password)
+      .then(() => {
+        updateUser(name, photoUrl).then(() => {
+          Swal.fire({
+            title: "User created successfully",
+            text: "",
+            icon: "success",
+          });
+        });
+
+        navigate("/");
+      })
+      .catch((err) => {
+        if (err) {
+          Swal.fire({
+            icon: "error",
+            text: `${err.message}`,
+            color: "#ff0000",
+          });
+        }
+      });
   };
 
   return (
