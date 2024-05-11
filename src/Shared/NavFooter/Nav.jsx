@@ -13,7 +13,7 @@ const Nav = () => {
   );
 
   return (
-    <div className="navbar bg-[#0f80de] text-white">
+    <div className="navbar bg-[#0f80de] text-white fixed">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -53,7 +53,7 @@ const Nav = () => {
       </div>
       <div className="navbar-end">
         <Link to="/login">
-          <button className="bg-yellow-400 font-bold px-4 py-2 text-xl text-[#0f80de] rounded-xl shadow-blue-600 shadow-sm hover:text-white hover:bg-yellow-300 border-none">
+          <button className="bg-yellow-400 font-bold md:px-4 px-2 py-1 md:py-2 md:text-xl text-[#0f80de] rounded-xl shadow-blue-600 shadow-sm hover:text-white hover:bg-yellow-300 border-none">
             Login
           </button>
         </Link>
