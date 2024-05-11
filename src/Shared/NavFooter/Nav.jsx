@@ -1,20 +1,46 @@
-
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
+import { CgProfile } from "react-icons/cg";
+import Swal from "sweetalert2";
 
 const Nav = () => {
+  const { user, logOut } = useContext(AuthContext);
+  // console.log(user);
+
+  const handleLogout = () =>{
+    logOut()
+    .then(()=>{
+      Swal.fire({
+        icon: 'success',
+        text: 'Logout successful'
+      })
+    })
+    .catch(err =>{
+      Swal.fire({
+        icon: 'error',
+        text: `${err.message}`
+      })
+    })
+  }
 
   const navLinks = (
     <>
       <li>
-        <NavLink className={"font-bold"} to="/">Home</NavLink>
+        <NavLink className={"font-bold"} to="/">
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink className={"font-bold"} to="/assignments">Assignments</NavLink>
+        <NavLink className={"font-bold"} to="/assignments">
+          Assignments
+        </NavLink>
       </li>
       <li>
-        <NavLink className={"font-bold"} to="/create-assignments">Create Assignments</NavLink>
+        <NavLink className={"font-bold"} to="/create-assignments">
+          Create Assignments
+        </NavLink>
       </li>
-     
     </>
   );
 
@@ -58,11 +84,30 @@ const Nav = () => {
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/login">
-          <button className="bg-yellow-400 font-bold md:px-4 px-2 py-1 md:py-2 md:text-xl text-[#0f80de] rounded-xl shadow-blue-600 shadow-sm hover:text-white hover:bg-yellow-300 border-none">
-            Login
-          </button>
-        </Link>
+        {user ? (
+          <div className="dropdown dropdown-left">
+            <div tabIndex={0} role="button" className="m-1">
+              <CgProfile size={35} />
+            </div>
+            <div
+              tabIndex={0}
+              className="dropdown-content text-center space-y-4 z-[1] menu p-2 shadow rounded-box w-52"
+            >
+              <h1>{user?.displayName}</h1>
+              <div className="w-full flex justify-center">
+              <button onClick={handleLogout} className="bg-yellow-400 w-1/2 text-[#0f80de] rounded-xl shadow-blue-600 shadow-sm hover:text-white hover:bg-yellow-300 ">
+                LogOut
+              </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Link to="/login">
+            <button className="bg-yellow-400 font-bold md:px-4 px-2 py-1 md:py-2 md:text-xl text-[#0f80de] rounded-xl shadow-blue-600 shadow-sm hover:text-white hover:bg-yellow-300 ">
+              Login
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );
