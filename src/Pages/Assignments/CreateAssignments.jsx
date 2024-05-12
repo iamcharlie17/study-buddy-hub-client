@@ -1,6 +1,18 @@
+import { useContext, useEffect } from "react";
 import formBg from "../../assets/images/form_bg.jpeg";
+import { AuthContext } from "../../Providers/AuthProviders";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CreateAssignments = () => {
+
+  const {user} = useContext(AuthContext)
+
+  const navigate = useNavigate()
+  // console.log({user})
+  // console.log(user.user)
+
   const handleCreateAssignmentForm = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -11,8 +23,41 @@ const CreateAssignments = () => {
     const thumbnail = form.thumbnail.value;
     const dueDate = form.dueDate.value;
 
-    const assignmentInfo = {title, description, marks, difficulty, thumbnail, dueDate}
-    console.log(assignmentInfo)
+    const assignmentInfo = {
+      title, 
+      description, 
+      marks, 
+      difficulty, 
+      thumbnail, 
+      dueDate,
+      creator: {
+        name: user?.displayName,
+        email: user?.email
+      }
+    }
+    
+    axios.post('http://localhost:3200/create-assignments', assignmentInfo)
+    .then(data => {
+      
+      // console.log(data.data)
+      if(data.data.insertedId){
+        Swal.fire({
+          icon: 'success',
+          text: "Added assingment successfully"
+        })
+        navigate('/my-assignments')
+      }
+    
+    })
+    .then(err => {
+      if(err){
+        Swal.fire({
+          icon: "error",
+          text: "Something is wrong!"
+        })
+      }
+    })
+
   };
 
   return (
