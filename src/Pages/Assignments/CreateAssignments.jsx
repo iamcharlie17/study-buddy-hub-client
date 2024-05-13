@@ -45,7 +45,7 @@ const CreateAssignments = () => {
           icon: 'success',
           text: "Added assingment successfully"
         })
-        navigate('/my-assignments')
+        navigate('/assignments')
       }
     
     })

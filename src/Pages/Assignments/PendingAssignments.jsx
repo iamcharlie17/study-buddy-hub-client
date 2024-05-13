@@ -1,13 +1,33 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
-import { MdCancel } from "react-icons/md";
+import {
+  Button,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
+import { Link } from "react-router-dom";
 
 const PendingAssignments = () => {
+  let [isOpen, setIsOpen] = useState(false);
+
+
+  function open() {
+    setIsOpen(true);
+  }
+
+  function close() {
+    setIsOpen(false);
+  }
+
   const { user } = useContext(AuthContext);
   //   console.log(user)
 
   const [submissions, setSubmissions] = useState([]);
+  //   const [control, setControl] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:3200/assignment-submissions").then((res) => {
@@ -17,9 +37,16 @@ const PendingAssignments = () => {
   //   console.log(submissions)
 
   const pendingAssignments = submissions.filter(
-    (a) => (a.creator?.email === user?.email && a.obtainedMarks<=0)
+    (a) => a.creator?.email === user?.email && a.obtainedMarks <= 0
   );
-//   console.log(pendingAssignments);
+
+  if (pendingAssignments.length < 1) {
+    return (
+      <h1 className="text-4xl text-red-600 pt-24 text-center min-h-screen font-bold">
+        No Pending Assignments
+      </h1>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -40,62 +67,22 @@ const PendingAssignments = () => {
           </thead>
           <tbody>
             {pendingAssignments.map((p) => (
-              <>
-                <tr>
-                  <td>{p.title}</td>
-                  <td>{p.marks}</td>
-                  <td>{p.writer.name}</td>
-                  <td>
-                  <button
-              className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm"
-              onClick={() => document.getElementById("my_modal_5").showModal()}
-            >
-              Give Marks
-            </button>
-            <dialog
-              id="my_modal_5"
-              className="modal modal-bottom sm:modal-middle"
-            >
-              <div className="modal-box bg-[#0f80de] text-white -z-10">
-                <form >
-                  <div className="bg-[#045281] p-4 text-center rounded-lg mb-4">
-                    <h1 className="text-2xl font-semibold ">Examinee Information</h1>
-                    <div>
-                        <h1>{p.writer?.name}</h1>
-                        <h2>Assignment Link: {p.link}</h2>
-                        <h3>Quick Note: {p.note}</h3>
-                        <h4>Total Marks: {p.marks}</h4>
-                    </div>
-                  </div>
-                  <input
-                    type="text"
-                    name="link"
-                    id=""
-                    className="w-full px-2 py-1 rounded-lg text-[#045281]"
-                    placeholder="Give Marks "
-                  />
-                  <div>
-                    <button
-                      method="dialog"
-                      className="bg-[#045281] px-4 py-2 text-white mt-2 font-semibold rounded-sm"
-                    >
-                      Submit Marks
-                    </button>
-                  </div>
-                </form>
-                <div className="modal-action">
-                  <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button>
-                      <MdCancel size={35} />
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </dialog>
-                  </td>
-                </tr>
-              </>
+              <tr key={p._id}>
+                <td>{p.title}</td>
+                <td>{p.marks}</td>
+                <td>{p.writer?.name}</td>
+                <td key={p._id}>
+                  <Link to={`/assignment-marks/${p._id}`}>
+                    <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">Give Mark</button>
+                  </Link>
+                 
+                  {/* <Link to={`/assignment-marks/${p._id}`}>
+                      <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">
+                        Give Marks
+                      </button>
+                    </Link> */}
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>

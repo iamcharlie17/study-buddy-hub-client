@@ -4,11 +4,16 @@ import Assignment from "./Assignment";
 
 const Assignments = () => {
   const [assignments, setAssignments] = useState([]);
+  const [control, setControl] = useState(false)
   useEffect(() => {
     axios.get("http://localhost:3200/assignments").then(({ data }) => {
       setAssignments(data);
     });
-  }, []);
+  }, [control]);
+
+  const handleControl = (value) =>{
+    value && setControl(!control)
+  }
 
   // console.log(assignments)
 
@@ -22,7 +27,7 @@ const Assignments = () => {
       </div>
       <div className="grid lg:grid-cols-2 gap-8 my-8">
         {
-            assignments.map(assignment => <Assignment key={assignment._id} assignment={assignment}/>)
+            assignments.map(assignment => <Assignment handleControl={handleControl} key={assignment._id} assignment={assignment}/>)
         }
       </div>
     </div>

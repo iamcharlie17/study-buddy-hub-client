@@ -11,7 +11,6 @@ const AssignmentDetails = () => {
 
   const assignment = useLoaderData();
   const {
-    _id,
     title,
     description,
     marks,
@@ -111,7 +110,7 @@ const AssignmentDetails = () => {
             </button> */}
             <button
               className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm"
-              onClick={() => document.getElementById("my_modal_5").showModal()}
+              onClick={() => {document.getElementById("my_modal_5").showModal()}}
             >
               Take Assignment
             </button>

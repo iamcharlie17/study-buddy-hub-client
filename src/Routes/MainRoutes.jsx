@@ -11,6 +11,7 @@ import AssignmentDetails from "../Pages/Assignments/AssignmentDetails";
 import MyAssignments from "../Pages/Assignments/MyAssignments";
 import UpdateAssignment from "../Pages/Assignments/UpdateAssignment";
 import PendingAssignments from "../Pages/Assignments/PendingAssignments";
+import AssignmentMarks from "../Pages/Assignments/AssignmentMarks";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,11 @@ const router = createBrowserRouter([
         {
           path: "/pending-assignments",
           element: <PrivateRoute><PendingAssignments/></PrivateRoute>
+        },
+        {
+          path: "/assignment-marks/:id",
+          element: <PrivateRoute><AssignmentMarks/></PrivateRoute>,
+          loader: ({params}) => fetch(`http://localhost:3200/assignment-marks/${params.id}`)
         },
         {
           path: "/login",

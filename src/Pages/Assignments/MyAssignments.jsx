@@ -37,6 +37,7 @@ const MyAssignments = () => {
           {/* head */}
           <thead>
             <tr>
+              <th>Preview</th>
               <th>Title</th>
               <th>Status</th>
               <th>Due Date</th>

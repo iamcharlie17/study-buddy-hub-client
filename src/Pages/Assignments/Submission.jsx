@@ -1,15 +1,14 @@
-import { useState } from "react";
+
 
 const Submission = ({ submission }) => {
 
-    const [isPending, setIsPending] = useState(true)
-
-    if(submission.obtainedMarks >= 0){
-        setIsPending(!isPending)
-    }
+  // console.log(submission.link);
 
   return (
     <tr>
+      <td>
+       <button>Preview</button>
+      </td>
       <td>
         <div className="flex items-center gap-3">
           <div>
@@ -17,23 +16,17 @@ const Submission = ({ submission }) => {
           </div>
         </div>
       </td>
-      <td>
-        {
-            isPending? <h1 className="text-yellow-500">Pending</h1> : <h1 className="text-green-500">Completed</h1>
-        }
-      </td>
+      {
+        submission.obtainedMarks>=0 ? <td className="text-green-500">Conpleted</td>: <td className="text-yellow-500">Pending</td>
+      }
       <td>{submission.dueDate}</td>
       <th>
         <button className="btn btn-ghost btn-xs">{submission.marks}</button>
       </th>
-      <td>
-        {
-            isPending ? <h1>Still Pending</h1> : submission.obtainedMarks
-        }
-      </td>
-      <td>
-        {submission.feedback}
-      </td>
+      {
+        submission.obtainedMarks>=0 ? <td>{submission.obtainedMarks}</td>: <td className="text-red-500">Still Pending</td>
+      }
+      <td>{submission.feedback}</td>
     </tr>
   );
 };

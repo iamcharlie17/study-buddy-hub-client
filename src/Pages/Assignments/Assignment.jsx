@@ -6,7 +6,7 @@ import { AuthContext } from "../../Providers/AuthProviders";
 import { MdDelete } from "react-icons/md";
 import { MdModeEdit } from "react-icons/md";
 
-const Assignment = ({ assignment }) => {
+const Assignment = ({ assignment, handleControl }) => {
   // console.table(assignment)
 
   const { user } = useContext(AuthContext);
@@ -50,6 +50,7 @@ const Assignment = ({ assignment }) => {
                 text: "Your file has been deleted.",
                 icon: "success",
               });
+              handleControl(1)
               navigate("/assignments");
             }
           });
