@@ -37,7 +37,7 @@ const PendingAssignments = () => {
   //   console.log(submissions)
 
   const pendingAssignments = submissions.filter(
-    (a) => a.creator?.email === user?.email && a.obtainedMarks <= 0
+    (a) => a.creator?.email === user?.email && a.obtainedMarks < 0
   );
 
   if (pendingAssignments.length < 1) {

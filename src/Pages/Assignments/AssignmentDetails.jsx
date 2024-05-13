@@ -7,21 +7,14 @@ import axios from "axios";
 
 const AssignmentDetails = () => {
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const assignment = useLoaderData();
-  const {
-    title,
-    description,
-    marks,
-    difficulty,
-    thumbnail,
-    dueDate,
-    creator,
-  } = assignment;
+  const { title, description, marks, difficulty, thumbnail, dueDate, creator } =
+    assignment;
 
   let obtainedMarks = -1;
-  let feedback = ''
+  let feedback = "";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,25 +38,37 @@ const AssignmentDetails = () => {
       },
     };
 
-    if(user?.email === creator.email){
-        Swal.fire({
-            icon: "error",
-            text: "You can not submit your own assignment"
-        })
-
-        return navigate('/assignments')
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+    if (!urlRegex.test(link)){
+      Swal.fire({
+        icon: 'error',
+        text: "You can not submit an Invalid Link!!"
+       })
+       navigate('/assignments')
+       return
     }
-    
-    axios.post('http://localhost:3200/assignment-submission', submissionInfo)
-    .then(res => {
-        if(res.data.insertedId){
-            Swal.fire({
-                icon: 'success',
-                text: "Assignment Submission Successfull"
-            })
-            navigate('/my-assignments')
+      
+
+    if (user?.email === creator.email) {
+      Swal.fire({
+        icon: "error",
+        text: "You can not submit your own assignment",
+      });
+
+      return navigate("/assignments");
+    }
+
+    axios
+      .post("http://localhost:3200/assignment-submission", submissionInfo)
+      .then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            text: "Assignment Submission Successfull",
+          });
+          navigate("/my-assignments");
         }
-    })
+      });
 
     form.reset();
     console.log(submissionInfo);
@@ -110,7 +115,9 @@ const AssignmentDetails = () => {
             </button> */}
             <button
               className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm"
-              onClick={() => {document.getElementById("my_modal_5").showModal()}}
+              onClick={() => {
+                document.getElementById("my_modal_5").showModal();
+              }}
             >
               Take Assignment
             </button>
