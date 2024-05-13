@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useContext } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import Swal from "sweetalert2";
 
 const AssignmentDetails = () => {
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const assignment = useLoaderData();
   const {
@@ -41,14 +41,15 @@ const AssignmentDetails = () => {
         axios
           .delete(`http://localhost:3200/delete-assignment/${id}`)
           .then((res) => {
-            console.log(res.data);
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              navigate("/assignments");
+            }
           });
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-        navigate('/assignments')
       }
     });
   };
@@ -92,9 +93,11 @@ const AssignmentDetails = () => {
             >
               Delete
             </button>
-            <button className="bg-green-400 px-4 py-2 text-white font-semibold rounded-sm">
-              Update
-            </button>
+            <Link to={`/update-assignment/${_id}`}>
+              <button className="bg-green-400 px-4 py-2 text-white font-semibold rounded-sm">
+                Update
+              </button>
+            </Link>
             <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">
               Take Assignment
             </button>

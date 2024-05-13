@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import formBg from "../../assets/images/form_bg.jpeg";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
