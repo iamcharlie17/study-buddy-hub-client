@@ -54,6 +54,13 @@ const Nav = () => {
           Create Assignments
         </NavLink>
       </li>
+      {
+        user && <li>
+        <NavLink className={"font-bold"} to="/my-assignments">
+          My Assignments
+        </NavLink>
+      </li>
+      }
     </>
   );
 

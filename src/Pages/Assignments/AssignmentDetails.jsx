@@ -1,6 +1,13 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import axios from "axios";
+import { useContext } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const AssignmentDetails = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate()
+
   const assignment = useLoaderData();
   const {
     _id,
@@ -12,6 +19,39 @@ const AssignmentDetails = () => {
     dueDate,
     creator,
   } = assignment;
+
+  const handleDeleteAssignment = (id) => {
+    if (user?.email !== creator?.email) {
+      return Swal.fire({
+        icon: "error",
+        text: "Action Denied",
+      });
+    }
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:3200/delete-assignment/${id}`)
+          .then((res) => {
+            console.log(res.data);
+          });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        navigate('/assignments')
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen  lg:flex flex-col justify-center">
@@ -46,9 +86,18 @@ const AssignmentDetails = () => {
           </div>
           {/* buttons */}
           <div className="flex gap-4 flex-wrap justify-around">
-            <button className="bg-red-500 px-4 py-2 text-white font-semibold rounded-sm">Delete</button>
-            <button className="bg-green-400 px-4 py-2 text-white font-semibold rounded-sm">Update</button>
-            <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">Take Assignment</button>
+            <button
+              onClick={() => handleDeleteAssignment(_id)}
+              className="bg-red-500 px-4 py-2 text-white font-semibold rounded-sm"
+            >
+              Delete
+            </button>
+            <button className="bg-green-400 px-4 py-2 text-white font-semibold rounded-sm">
+              Update
+            </button>
+            <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">
+              Take Assignment
+            </button>
           </div>
         </div>
       </div>
