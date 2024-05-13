@@ -12,6 +12,7 @@ import MyAssignments from "../Pages/Assignments/MyAssignments";
 import UpdateAssignment from "../Pages/Assignments/UpdateAssignment";
 import PendingAssignments from "../Pages/Assignments/PendingAssignments";
 import AssignmentMarks from "../Pages/Assignments/AssignmentMarks";
+import AssignementPreview from "../Pages/Assignments/AssignementPreview";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
         {
           path: "/assignment-marks/:id",
           element: <PrivateRoute><AssignmentMarks/></PrivateRoute>,
+          loader: ({params}) => fetch(`http://localhost:3200/assignment-marks/${params.id}`)
+        },
+        {
+          path: "/assignment-preview/:id",
+          element: <PrivateRoute><AssignementPreview/></PrivateRoute>,
           loader: ({params}) => fetch(`http://localhost:3200/assignment-marks/${params.id}`)
         },
         {
