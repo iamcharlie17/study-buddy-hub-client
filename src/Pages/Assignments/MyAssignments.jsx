@@ -1,21 +1,25 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
+import axios from "axios";
+import Submission from "./Submission"
 
 const MyAssignments = () => {
   const { user } = useContext(AuthContext);
+  // console.log(user)
 
-  const [assignments, setAssignments] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
+
   useEffect(() => {
-    axios.get("http://localhost:3200/assignments").then(({ data }) => {
-      setAssignments(data);
+    axios.get("http://localhost:3200/assignment-submissions").then((res) => {
+      setSubmissions(res.data);
     });
   }, []);
-  //   console.log(assignments.filter((a) => a.creator.email === user.email));
 
-  const MyAssignments = assignments.filter(
-    (a) => a.creator?.email === user?.email
+  // console.log(submissions)
+  const mySubmissions = submissions.filter(
+    (s) => s.writer?.email === user?.email
   );
+  // console.log(mySubmissions)
 
   return (
     <div className="min-h-screen">
@@ -30,40 +34,16 @@ const MyAssignments = () => {
           <thead>
             <tr>
               <th>Title</th>
-              <th>Description</th>
-              <th>Marks</th>
+              <th>Status</th>
               <th>Due Date</th>
+              <th>Marks</th>
+              <th>Obtianed Marks</th>
             </tr>
           </thead>
           <tbody>
-            {MyAssignments.map((a) => (
-              <>
-                <tr>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle w-20 h-20">
-                          <img
-                            src={a.thumbnail}
-                            alt="Avatar Tailwind CSS Component"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">{a.title}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td title={a.description}>
-                   {a.description.slice(0,30)}...
-                  </td>
-                  <td>{a.marks}</td>
-                  <th>
-                    <button className="btn btn-ghost btn-xs">{a.dueDate}</button>
-                  </th>
-                </tr>
-              </>
-            ))}
+            {
+              mySubmissions.map(submission =>  <Submission submission={submission} key={submission._id}/>)
+            }
           </tbody>
         </table>
       </div>
@@ -72,3 +52,20 @@ const MyAssignments = () => {
 };
 
 export default MyAssignments;
+
+{/* <tr>
+  <td>
+    <div className="flex items-center gap-3">
+      <div>
+        <div className="font-bold">
+          {idx + 1}. {a.title}
+        </div>
+      </div>
+    </div>
+  </td>
+  <td>{a.obtainedMarks && <h1 className="text-yellow-500">Pending</h1>}</td>
+  <td>{a.dueDate}</td>
+  <th>
+    <button className="btn btn-ghost btn-xs">{a.marks}</button>
+  </th>
+</tr>; */}
