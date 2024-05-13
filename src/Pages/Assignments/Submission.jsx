@@ -31,6 +31,9 @@ const Submission = ({ submission }) => {
             isPending ? <h1>Still Pending</h1> : submission.obtainedMarks
         }
       </td>
+      <td>
+        {submission.feedback}
+      </td>
     </tr>
   );
 };

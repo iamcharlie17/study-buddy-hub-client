@@ -61,6 +61,13 @@ const Nav = () => {
         </NavLink>
       </li>
       }
+      {
+        user && <li>
+        <NavLink className={"font-bold"} to="/pending-assignments">
+          Pending Assignments
+        </NavLink>
+      </li>
+      }
     </>
   );
 

@@ -22,6 +22,7 @@ const AssignmentDetails = () => {
   } = assignment;
 
   let obtainedMarks = -1;
+  let feedback = ''
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +38,7 @@ const AssignmentDetails = () => {
       obtainedMarks,
       link,
       note,
+      feedback,
       creator,
       writer: {
         name: user?.displayName,

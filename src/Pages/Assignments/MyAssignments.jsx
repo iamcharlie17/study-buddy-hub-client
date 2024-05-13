@@ -21,6 +21,10 @@ const MyAssignments = () => {
   );
   // console.log(mySubmissions)
 
+  if(mySubmissions.length<1){
+    return <h1 className="text-4xl text-red-600 pt-24 text-center min-h-screen font-bold">No Submission</h1>
+  }
+
   return (
     <div className="min-h-screen">
       <h1 className="pt-20 font-semibold text-4xl text-center text-[#045281]">
@@ -38,6 +42,7 @@ const MyAssignments = () => {
               <th>Due Date</th>
               <th>Marks</th>
               <th>Obtianed Marks</th>
+              <th>Feedback</th>
             </tr>
           </thead>
           <tbody>
