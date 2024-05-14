@@ -30,7 +30,7 @@ const PendingAssignments = () => {
   //   const [control, setControl] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3200/assignment-submissions").then((res) => {
+    axios.get("http://localhost:3200/assignment-submissions", {withCredentials: true}).then((res) => {
       setSubmissions(res.data);
     });
   }, []);
