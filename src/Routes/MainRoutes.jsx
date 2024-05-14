@@ -13,6 +13,7 @@ import UpdateAssignment from "../Pages/Assignments/UpdateAssignment";
 import PendingAssignments from "../Pages/Assignments/PendingAssignments";
 import AssignmentMarks from "../Pages/Assignments/AssignmentMarks";
 import AssignementPreview from "../Pages/Assignments/AssignementPreview";
+import NotFound from "../components/NotFound";
 
 const router = createBrowserRouter([
     {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
         }
       ]
     },
+    {
+      path: "*",
+      element: <NotFound/>
+    }
   ]);
 
 export default router;

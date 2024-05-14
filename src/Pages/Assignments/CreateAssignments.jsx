@@ -103,7 +103,7 @@ const CreateAssignments = () => {
             <label htmlFor="title">Marks</label>
             <br />
             <input
-              type="text"
+              type="number"
               name="marks"
               className="w-full py-1 text-[#045281] md:py-2 px-2 md:px-4  rounded-lg"
               placeholder="Marks"

@@ -27,7 +27,8 @@ const Assignment = ({ assignment, handleControl }) => {
     if (user?.email !== creator?.email) {
       return Swal.fire({
         icon: "error",
-        text: "Action Denied",
+        title: 'Action Denied',
+        text: "Only Creator can perfom this action",
       });
     }
 
@@ -64,7 +65,7 @@ const Assignment = ({ assignment, handleControl }) => {
         style={{
           backgroundImage: `url(${thumbnail})`,
         }}
-        className="h-64 md:h-72 bg-cover"
+        className="h-64 md:h-80 bg-cover"
       ></div>
       <div className="md:flex justify-between items-center">
         <div>
