@@ -42,7 +42,7 @@ const AssignmentDetails = () => {
     if (!urlRegex.test(link)){
       Swal.fire({
         icon: 'error',
-        text: "You can not submit an Invalid Link!!"
+        text: "Please submit a valid pdf/doc link!!"
        })
        navigate('/assignments')
        return
