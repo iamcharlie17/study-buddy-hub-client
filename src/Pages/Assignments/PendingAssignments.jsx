@@ -1,39 +1,36 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
-import {
-  Button,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  Transition,
-  TransitionChild,
-} from "@headlessui/react";
+
 import { Link } from "react-router-dom";
 
 const PendingAssignments = () => {
-  let [isOpen, setIsOpen] = useState(false);
-
-
-  function open() {
-    setIsOpen(true);
-  }
-
-  function close() {
-    setIsOpen(false);
-  }
-
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const [submissions, setSubmissions] = useState([]);
   //   console.log(user)
 
-  const [submissions, setSubmissions] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "https://study-buddy-hub-server-one.vercel.app/assignment-submissions",
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setSubmissions(res.data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading)
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center">
+        <span className="loading text-[#0f80de] w-24 loading-dots "></span>
+      </div>
+    );
+
   //   const [control, setControl] = useState(false);
 
-  useEffect(() => {
-    axios.get("http://localhost:3200/assignment-submissions", {withCredentials: true}).then((res) => {
-      setSubmissions(res.data);
-    });
-  }, []);
   //   console.log(submissions)
 
   const pendingAssignments = submissions.filter(
@@ -73,9 +70,11 @@ const PendingAssignments = () => {
                 <td>{p.writer?.name}</td>
                 <td key={p._id}>
                   <Link to={`/assignment-marks/${p._id}`}>
-                    <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">Give Mark</button>
+                    <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">
+                      Give Mark
+                    </button>
                   </Link>
-                 
+
                   {/* <Link to={`/assignment-marks/${p._id}`}>
                       <button className="bg-[#045281] px-4 py-2 text-white font-semibold rounded-sm">
                         Give Marks

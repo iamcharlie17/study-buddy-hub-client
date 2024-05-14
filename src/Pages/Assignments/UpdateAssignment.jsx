@@ -19,7 +19,7 @@ const UpdateAssignment = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3200/assignment-details/${id.id}`)
+      .get(`https://study-buddy-hub-server-one.vercel.app/assignment-details/${id.id}`)
       .then((res) => setAssignment(res.data));
   }, [id.id]);
 
@@ -68,7 +68,7 @@ const UpdateAssignment = () => {
       if (result.isConfirmed) {
         axios
           .put(
-            `http://localhost:3200/update-assignment/${_id}`,
+            `https://study-buddy-hub-server-one.vercel.app/update-assignment/${_id}`,
             updatedAssignmentInfo
           )
           .then((res) => {

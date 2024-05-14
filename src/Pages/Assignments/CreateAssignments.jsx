@@ -36,7 +36,7 @@ const CreateAssignments = () => {
       }
     }
     
-    axios.post('http://localhost:3200/create-assignments', assignmentInfo)
+    axios.post('https://study-buddy-hub-server-one.vercel.app/create-assignments', assignmentInfo)
     .then(data => {
       
       // console.log(data.data)

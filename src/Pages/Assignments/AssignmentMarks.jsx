@@ -24,7 +24,7 @@ const AssignmentMarks = () => {
     console.log(marksInfo)
     console.log(_id)
 
-    axios.put(`http://localhost:3200/assignment-marks/${_id}`, marksInfo)
+    axios.put(`https://study-buddy-hub-server-one.vercel.app/assignment-marks/${_id}`, marksInfo)
     .then(res => {
       if(res.data.modifiedCount >0){
         Swal.fire({

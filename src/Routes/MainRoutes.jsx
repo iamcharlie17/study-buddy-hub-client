@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         {
           path: "/assignment-details/:id",
           element: <PrivateRoute><AssignmentDetails/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:3200/assignment-details/${params.id}`)
+          loader: ({params}) => fetch(`https://study-buddy-hub-server-one.vercel.app/assignment-details/${params.id}`)
         },
         {
           path: "/create-assignments",
@@ -52,12 +52,12 @@ const router = createBrowserRouter([
         {
           path: "/assignment-marks/:id",
           element: <PrivateRoute><AssignmentMarks/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:3200/assignment-marks/${params.id}`)
+          loader: ({params}) => fetch(`https://study-buddy-hub-server-one.vercel.app/assignment-marks/${params.id}`)
         },
         {
           path: "/assignment-preview/:id",
           element: <PrivateRoute><AssignementPreview/></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:3200/assignment-marks/${params.id}`)
+          loader: ({params}) => fetch(`https://study-buddy-hub-server-one.vercel.app/assignment-marks/${params.id}`)
         },
         {
           path: "/login",

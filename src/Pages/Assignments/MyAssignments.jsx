@@ -6,14 +6,22 @@ import Submission from "./Submission"
 const MyAssignments = () => {
   const { user } = useContext(AuthContext);
   // console.log(user)
-
+  const [loading, setLoading] = useState(true)
   const [submissions, setSubmissions] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3200/assignment-submissions", {withCredentials: true}).then((res) => {
+    axios.get("https://study-buddy-hub-server-one.vercel.app/assignment-submissions", {withCredentials: true}).then((res) => {
       setSubmissions(res.data);
+      setLoading(false)
     });
   }, []);
+
+  if (loading)
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center">
+        <span className="loading text-[#0f80de] w-24 loading-dots "></span>
+      </div>
+    );
 
   // console.log(submissions)
   const mySubmissions = submissions.filter(

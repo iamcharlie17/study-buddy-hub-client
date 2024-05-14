@@ -7,23 +7,39 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 const Assignments = () => {
   const [assignments, setAssignments] = useState([]);
   const [control, setControl] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios.get("http://localhost:3200/assignments").then(({ data }) => {
-      setAssignments(data);
-    });
+    axios
+      .get("https://study-buddy-hub-server-one.vercel.app/assignments")
+      .then(({ data }) => {
+        setAssignments(data);
+        setLoading(false);
+      });
   }, [control]);
 
   const handleControl = (value) => {
     value && setControl(!control);
   };
 
-  const handleDifficulty = (difficulty) =>{
-    axios.get(`http://localhost:3200/assignments/filter/${difficulty}`)
-    .then(res => {
-      // console.log(res.data)
-      setAssignments(res.data)
-    })
-  }
+  const handleDifficulty = (difficulty) => {
+    setLoading(true)
+    axios
+      .get(
+        `https://study-buddy-hub-server-one.vercel.app/assignments/filter/${difficulty}`
+      )
+      .then((res) => {
+        // console.log(res.data)
+        setAssignments(res.data);
+        setLoading(false);
+      });
+  };
+
+  if (loading)
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center">
+        <span className="loading text-[#0f80de] w-24 loading-dots "></span>
+      </div>
+    );
 
   // console.log(assignments)
 
@@ -37,16 +53,43 @@ const Assignments = () => {
       </div>
       <div className="text-end my-4">
         <Menu>
-          <MenuButton className={"font-semibold text-2xl mr-4 bg-[#0f80de] text-white px-4 py-1 rounded-lg"}>Difficulty</MenuButton>
-          <MenuItems anchor="bottom end" className={'px-8 py-1  text-white'}>
+          <MenuButton
+            className={
+              "font-semibold text-2xl mr-4 bg-[#0f80de] text-white px-4 py-1 rounded-lg"
+            }
+          >
+            Difficulty
+          </MenuButton>
+          <MenuItems anchor="bottom end" className={"px-8 py-1  text-white"}>
             <MenuItem>
-              <button onClick={()=>handleDifficulty('Easy')} className={"font-semibold  border p-2 rounded-lg mx-2 bg-[#0f80de]"}>Easy</button>
+              <button
+                onClick={() => handleDifficulty("Easy")}
+                className={
+                  "font-semibold  border p-2 rounded-lg mx-2 bg-[#0f80de]"
+                }
+              >
+                Easy
+              </button>
             </MenuItem>
             <MenuItem>
-              <button onClick={()=>handleDifficulty('Medium')} className={"font-semibold border p-2 rounded-lg mx-2 bg-[#0f80de]"}>Medium</button>
+              <button
+                onClick={() => handleDifficulty("Medium")}
+                className={
+                  "font-semibold border p-2 rounded-lg mx-2 bg-[#0f80de]"
+                }
+              >
+                Medium
+              </button>
             </MenuItem>
             <MenuItem>
-              <button onClick={()=>handleDifficulty('Hard')} className={"font-semibold border p-2 rounded-lg mx-2 bg-[#0f80de]"}>Hard</button>
+              <button
+                onClick={() => handleDifficulty("Hard")}
+                className={
+                  "font-semibold border p-2 rounded-lg mx-2 bg-[#0f80de]"
+                }
+              >
+                Hard
+              </button>
             </MenuItem>
           </MenuItems>
         </Menu>

@@ -59,7 +59,7 @@ const AssignmentDetails = () => {
     }
 
     axios
-      .post("http://localhost:3200/assignment-submission", submissionInfo)
+      .post("https://study-buddy-hub-server-one.vercel.app/assignment-submission", submissionInfo)
       .then((res) => {
         if (res.data.insertedId) {
           Swal.fire({

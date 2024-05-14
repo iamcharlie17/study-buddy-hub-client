@@ -43,7 +43,7 @@ const Assignment = ({ assignment, handleControl }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3200/delete-assignment/${id}`)
+          .delete(`https://study-buddy-hub-server-one.vercel.app/delete-assignment/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
               Swal.fire({
